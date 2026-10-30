@@ -1,16 +1,26 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const apiKey =
-    process.env.BPS_API_KEY ||
-    "557ff0af4088aa2b6e0829a74787e3ee0fb8474f466d5f5b56a319f682baca2b";
+  const apiKey = process.env.BPS_API_KEY;
+
+  if (!apiKey) {
+    return NextResponse.json(
+      {
+        status: "disabled",
+        message: "Kunci BPS_API_KEY tidak dikonfigurasi di lingkungan server.",
+      },
+      { status: 400 }
+    );
+  }
 
   try {
-    // Panggil BPS WebAPI untuk daftar tabel resmi transportasi kereta api
-    const url = `https://webapi.bps.go.id/v1/api/list/model/statictable/domain/0000/keyword/kereta/key/${apiKey}/`;
+    // Panggil BPS WebAPI secara aman di sisi server tanpa mengekspos API Key ke client
+    const url = `https://webapi.bps.go.id/v1/api/list/model/statictable/domain/0000/keyword/kereta/key/${encodeURIComponent(
+      apiKey
+    )}/`;
 
     const res = await fetch(url, {
-      next: { revalidate: 3600 }, // Cache selama 1 jam
+      next: { revalidate: 3600 }, // Cache server selama 1 jam untuk hemat kuota dan performa
       headers: {
         Accept: "application/json",
       },
@@ -27,27 +37,29 @@ export async function GET() {
     }
 
     const data = await res.json();
-
-    // Masking API Key untuk keamanan tampilan
-    const maskedKey = apiKey
-      ? `${apiKey.slice(0, 8)}...${apiKey.slice(-6)}`
-      : "Not set";
-
     const tables = data.data?.[1] || [];
 
+    // Response publik ke client tanpa mengekspos kunci API apa pun
     return NextResponse.json({
       status: "connected",
-      message: "Berhasil terhubung ke WebAPI Badan Pusat Statistik (BPS)",
+      message: "Server terhubung resmi ke WebAPI Badan Pusat Statistik (BPS)",
       provider: "Badan Pusat Statistik (BPS)",
       dataOrigin: "PT Kereta Api (Persero)",
-      apiKeyMasked: maskedKey,
+      connectionType: "Server-to-Server (Encrypted HTTPS)",
       totalTables: data.data?.[0]?.total || tables.length,
-      tables: tables.map((t: { table_id: number; title: string; updt_date: string; size: string }) => ({
-        id: t.table_id,
-        title: t.title,
-        updatedAt: t.updt_date,
-        size: t.size,
-      })),
+      tables: tables.map(
+        (t: {
+          table_id: number;
+          title: string;
+          updt_date: string;
+          size: string;
+        }) => ({
+          id: t.table_id,
+          title: t.title,
+          updatedAt: t.updt_date,
+          size: t.size,
+        })
+      ),
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
@@ -61,4 +73,3 @@ export async function GET() {
     );
   }
 }
-

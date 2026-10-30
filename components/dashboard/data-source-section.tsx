@@ -8,11 +8,10 @@ import {
   Database,
   ShieldCheck,
   HelpCircle,
-  Wifi,
   CheckCircle2,
   RefreshCw,
-  Key,
   Server,
+  Lock,
 } from "lucide-react";
 
 interface BpsApiResponse {
@@ -20,7 +19,7 @@ interface BpsApiResponse {
   message: string;
   provider: string;
   dataOrigin: string;
-  apiKeyMasked: string;
+  connectionType: string;
   totalTables: number;
   tables: Array<{
     id: number;
@@ -34,7 +33,6 @@ interface BpsApiResponse {
 export function DataSourceSection() {
   const [bpsStatus, setBpsStatus] = useState<BpsApiResponse | null>(null);
   const [loading, setLoading] = useState(false);
-  const [showJson, setShowJson] = useState(false);
 
   const fetchBpsStatus = async () => {
     setLoading(true);
@@ -75,7 +73,7 @@ export function DataSourceSection() {
         <div className="flex items-center gap-2">
           <Database className="h-4 w-4 text-blue-600 dark:text-blue-400" />
           <h2 className="text-base font-bold tracking-tight text-slate-900 dark:text-slate-100">
-            Sumber Data, WebAPI Resmi, dan Definisi
+            Sumber Data, Integrasi Resmi, dan Definisi
           </h2>
         </div>
 
@@ -104,11 +102,11 @@ export function DataSourceSection() {
                 </h3>
                 <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100/80 px-2 py-0.5 text-[10px] font-bold text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300">
                   <CheckCircle2 className="h-3 w-3 text-emerald-600" />
-                  Kunci API Aktif
+                  Koneksi Aman & Terverifikasi
                 </span>
               </div>
               <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-400">
-                Dashboard terhubung secara resmi ke portal pengembang{" "}
+                Dashboard terhubung resmi ke portal data{" "}
                 <span className="font-semibold text-blue-700 dark:text-blue-400">
                   webapi.bps.go.id
                 </span>{" "}
@@ -126,55 +124,38 @@ export function DataSourceSection() {
               type="button"
               onClick={fetchBpsStatus}
               disabled={loading}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-blue-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-2xs backdrop-blur-md transition-all hover:bg-blue-50 disabled:opacity-50 dark:border-blue-800 dark:bg-slate-800 dark:text-blue-300"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-blue-200 bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-blue-700 shadow-2xs backdrop-blur-md transition-all hover:bg-blue-50 disabled:opacity-50 dark:border-blue-800 dark:bg-slate-800 dark:text-blue-300"
             >
               <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
               <span>{loading ? "Menghubungi..." : "Cek Ulang Server"}</span>
             </button>
-            <button
-              type="button"
-              onClick={() => setShowJson(!showJson)}
-              className="rounded-xl border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-2xs backdrop-blur-md hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
-            >
-              {showJson ? "Tutup Data" : "Lihat Raw API"}
-            </button>
           </div>
         </div>
 
-        {/* Status detail grid */}
+        {/* Status detail grid with zero sensitive credential exposure */}
         <div className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-3 border-t border-blue-100/80 pt-3 text-xs dark:border-slate-800">
           <div className="flex items-center gap-2">
-            <Key className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
-            <span className="text-slate-500 dark:text-slate-400">API Key:</span>
-            <code className="rounded-md bg-white/80 px-1.5 py-0.5 font-mono text-[11px] font-bold text-slate-800 shadow-2xs dark:bg-slate-800 dark:text-slate-200">
-              {bpsStatus?.apiKeyMasked || "557ff0af...baca2b"}
-            </code>
+            <Lock className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+            <span className="text-slate-500 dark:text-slate-400">Keamanan:</span>
+            <span className="font-semibold text-slate-700 dark:text-slate-300">
+              Kredensial Terproteksi di Server (.env)
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+            <span className="text-slate-500 dark:text-slate-400">Protokol:</span>
+            <span className="font-semibold text-slate-700 dark:text-slate-300">
+              Server-to-Server HTTPS
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <Database className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
-            <span className="text-slate-500 dark:text-slate-400">Endpoint:</span>
-            <span className="font-semibold text-slate-700 dark:text-slate-300">
-              v1/api/list/statictable
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Wifi className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
-            <span className="text-slate-500 dark:text-slate-400">Tabel Terverifikasi:</span>
+            <span className="text-slate-500 dark:text-slate-400">Tabel Resmi:</span>
             <span className="font-semibold text-blue-700 dark:text-blue-300">
-              ID 1426 (PT KAI Persero)
+              ID 1426 (PT Kereta Api Persero)
             </span>
           </div>
         </div>
-
-        {/* Collapsible raw JSON response preview for lecturer / examination */}
-        {showJson && bpsStatus && (
-          <div className="mt-4 rounded-xl border border-blue-200/80 bg-slate-900 p-3.5 text-[11px] font-mono text-emerald-400 shadow-inner overflow-x-auto">
-            <div className="mb-2 text-[10px] uppercase font-bold text-slate-400">
-              Respons Live dari WebAPI BPS (JSON Payload):
-            </div>
-            <pre>{JSON.stringify(bpsStatus, null, 2)}</pre>
-          </div>
-        )}
       </Card>
 
       {/* Methodology, Scope & References */}
