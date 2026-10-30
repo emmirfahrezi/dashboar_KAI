@@ -124,24 +124,26 @@ export function SvgColumnChart({
                 />
               )}
 
-              {/* Peak indicator icon & badge above bar */}
+              {/* Peak indicator icon & badge above bar (static, clean & elegant) */}
               {isPeak && (
-                <g className="animate-bounce">
+                <g>
                   <rect
-                    x={xSlotCenter - 27}
-                    y={barY - 26}
-                    width="54"
-                    height="16"
-                    rx="8"
+                    x={xSlotCenter - 26}
+                    y={barY - 24}
+                    width="52"
+                    height="15"
+                    rx="7.5"
                     fill="#0284c7"
-                    className="shadow-sm"
+                    stroke="#ffffff"
+                    strokeWidth="1"
+                    className="shadow-xs"
                   />
                   <text
                     x={xSlotCenter}
-                    y={barY - 14.5}
+                    y={barY - 13}
                     textAnchor="middle"
                     fill="#ffffff"
-                    className="text-[9px] font-extrabold tracking-wider"
+                    className="text-[8.5px] font-extrabold tracking-wider"
                   >
                     ★ PUNCAK
                   </text>
