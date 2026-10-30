@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Penumpang Kereta Api Indonesia</title>
+<style>
+:root{--bg:#f3f6f5;--panel:#fff;--fg:#17211e;--muted:#64716c;--line:#dfe7e3;--accent:#087e65;--accent2:#bce8d9;--soft:#e6f5ef;--good:#18794e;--warn:#9a6700;--bad:#b42318;--radius:13px;--shadow:0 2px 8px rgba(18,45,35,.035)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 "Segoe UI",system-ui,-apple-system,Arial,sans-serif}
+.wrap{max-width:1400px;margin:auto;padding:24px 22px 40px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:20px}
+.brand{display:flex;gap:12px;align-items:center}.logo{height:46px;width:46px;border-radius:13px;background:var(--accent);display:grid;place-items:center;color:#fff;font-size:23px;font-weight:800}
+h1{font-size:clamp(22px,3vw,30px);letter-spacing:-.7px;margin:0;font-weight:750}.eyebrow{font-size:11px;color:var(--accent);font-weight:800;letter-spacing:1.2px;text-transform:uppercase}.sub{color:var(--muted);font-size:12px}
+.controls{display:flex;gap:10px;align-items:end;flex-wrap:wrap}.controls label{display:flex;flex-direction:column;gap:4px;color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+select,button{font:inherit;border:1px solid var(--line);border-radius:8px;padding:9px 11px;background:white;color:var(--fg)}button{cursor:pointer;background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}button:hover{filter:brightness(.95)}
+.notice{border:1px solid #d2e8de;background:#eef8f3;color:#285747;border-radius:10px;padding:10px 13px;margin:12px 0 20px;font-size:12px}
+section{margin-top:25px}section h2{font-size:17px;margin:0 0 3px;letter-spacing:-.2px}section .desc{font-size:12px;color:var(--muted);margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);min-width:0}.metric-label{font-size:12px;color:var(--muted);font-weight:600}.metric{font-size:clamp(22px,2.8vw,30px);font-weight:800;letter-spacing:-.8px;margin:6px 0 1px}.metric-foot{font-size:11px;color:var(--muted)}.delta{display:inline-block;padding:2px 7px;border-radius:99px;background:var(--soft);color:var(--good);font-size:11px;font-weight:700}
+.chart-card h3,.card h3{font-size:13px;margin:0 0 4px}.chart-card .sub{margin-bottom:8px}.chart{width:100%;height:auto;display:block;overflow:visible}.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:6px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:var(--accent)}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.table{border-collapse:collapse;width:100%;font-size:12px;min-width:620px}.table th,.table td{padding:10px 12px;text-align:right;border-bottom:1px solid #edf1ef;white-space:nowrap}.table th{background:#f7faf8;color:#52615b;font-size:11px;text-transform:uppercase;letter-spacing:.4px}.table th:first-child,.table td:first-child{text-align:left}.table tr:last-child td{border-bottom:0}.table tbody tr:hover{background:#f7fbf9}
+.barrow{display:grid;grid-template-columns:minmax(115px,1.1fr) 3fr 80px;gap:10px;align-items:center;margin:12px 0;font-size:12px}.track{height:10px;background:#edf2ef;border-radius:99px;overflow:hidden}.fill{height:100%;background:var(--accent);border-radius:99px}.barval{text-align:right;font-weight:750;font-variant-numeric:tabular-nums}
+.insight{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);padding:14px 16px;border-radius:10px;font-size:13px}.insight b{display:block;margin-bottom:3px}.footer{font-size:11px;color:var(--muted);border-top:1px solid var(--line);margin-top:28px;padding-top:15px}.tag{display:inline-block;font-size:10px;padding:3px 7px;background:#f0f4f2;border-radius:99px;color:#52615b;font-weight:700}.empty{color:var(--muted);font-size:12px;padding:20px;text-align:center}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.wrap{padding:16px 12px 28px}.grid,.grid.two,.grid.three{grid-template-columns:1fr}.barrow{grid-template-columns:105px 1fr 65px;gap:7px}.card{padding:13px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">
+    <div class="logo">KAI</div>
+    <div><div class="eyebrow">Information Dashboard</div><h1>Penumpang Kereta Api Indonesia</h1><div class="sub">Tren tahunan, pola bulanan, dan komposisi moda transportasi</div></div>
+  </div>
+  <div class="controls">
+    <label>Fokus data
+      <select id="scope"><option value="annual">Tren tahunan 2015–2024</option><option value="monthly">Tren bulanan 2024</option><option value="modes">Komposisi moda 2024</option></select>
+    </label>
+    <label>Tahun pembanding
+      <select id="compare"><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2019">2019</option></select>
+    </label>
+    <button id="reset">Reset tampilan</button>
+  </div>
+</header>
+<div class="notice"><b>Catatan cakupan data:</b> angka tren tahunan 2015–2024 diambil dari seri BPS yang tidak mencakup kereta bandara, MRT, LRT, dan Whoosh. Rincian moda tahun 2024 menggunakan cakupan yang lebih luas. Angka pada dua cakupan tersebut tidak boleh dijumlahkan atau dibandingkan langsung tanpa penjelasan.</div>
+
+<section>
+<h2>Ringkasan utama</h2><p class="desc">Indikator utama berubah mengikuti pilihan fokus data di atas.</p>
+<div class="grid" id="kpis"></div>
+</section>
+
+<section id="annualSection">
+<h2>Perjalanan penumpang dari tahun ke tahun</h2><p class="desc">Jumlah penumpang tahunan, dalam juta orang. Seri ini tidak termasuk kereta bandara, MRT, LRT, dan Whoosh.</p>
+<div class="grid two">
+  <div class="card chart-card"><h3>Tren jumlah penumpang (2015–2024)</h3><div class="sub">Menunjukkan penurunan saat pandemi dan pemulihan setelahnya.</div><div id="annualChart"></div></div>
+  <div class="card chart-card"><h3>Perubahan dibanding tahun sebelumnya</h3><div class="sub">Pertumbuhan tahunan (year-on-year), persen.</div><div id="growthChart"></div></div>
+</div>
+</section>
+
+<section id="monthlySection" hidden>
+<h2>Pola penumpang per bulan — 2024</h2><p class="desc">Jumlah penumpang gabungan berdasarkan tabel BPS nasional bulanan, dalam juta orang.</p>
+<div class="grid two">
+ <div class="card chart-card"><h3>Tren bulanan</h3><div class="sub">Puncak dan titik terendah sepanjang tahun.</div><div id="monthlyChart"></div></div>
+ <div class="card chart-card"><h3>Perbandingan kuartal</h3><div class="sub">Total penumpang per kuartal, dalam juta orang.</div><div id="quarterChart"></div></div>
+</div>
+</section>
+
+<section id="modesSection" hidden>
+<h2>Komposisi moda transportasi — 2024</h2><p class="desc">Jumlah penumpang per kategori moda, dalam juta orang. Cakupan ini lebih luas daripada seri historis di atas.</p>
+<div class="grid two">
+ <div class="card chart-card"><h3>Penumpang berdasarkan moda</h3><div class="sub">Urut dari volume terbesar.</div><div id="modeBars"></div></div>
+ <div class="card chart-card"><h3>Kontribusi terhadap total</h3><div class="sub">Persentase dari total penumpang seluruh kategori pada tabel BPS.</div><div id="modeShare"></div></div>
+</div>
+</section>
+
+<section>
+<h2>Rincian data</h2><p class="desc" id="tableDesc">Data tahunan dan perubahan year-on-year.</p>
+<div class="table-wrap"><table class="table" id="detailTable"></table></div>
+</section>
+
+<section>
+<h2>Insight yang dapat dibaca dari dashboard</h2><p class="desc">Interpretasi otomatis berdasarkan dataset yang sedang ditampilkan.</p>
+<div class="grid three" id="insights"></div>
+</section>
+
+<section>
+<h2>Sumber dan definisi</h2>
+<div class="card">
+  <p style="margin-top:0"><b>Sumber utama:</b> Badan Pusat Statistik (BPS), tabel statistik jumlah penumpang kereta api; rangkuman DataIndonesia.id untuk seri tahunan 2015–2024.</p>
+  <p><b>Definisi:</b> penumpang adalah jumlah perjalanan/layanan penumpang yang tercatat, bukan jumlah individu unik. Satu orang yang bepergian berkali-kali dapat dihitung lebih dari sekali.</p>
+  <p><b>Batasan:</b> data publik ini menjelaskan volume penggunaan transportasi, bukan data pribadi penumpang, tujuan perjalanan tiap individu, pendapatan tiket, kepuasan, atau data pegawai. Tahun 2025 tidak ditambahkan ke seri historis karena seri yang dipakai di sini berakhir pada 2024.</p>
+  <p style="margin-bottom:0">Tautan sumber: <a href="https://www.bps.go.id/id/statistics-table/2/MjA1MSMy/jumlah-penumpang-berdasarkan-moda-transportasi-kereta-api-orang.html" target="_blank" rel="noreferrer">BPS — jumlah penumpang berdasarkan moda</a> · <a href="https://www.bps.go.id/id/statistics-table/2/MjM1MyMy/penumpang-angkutan-kereta-api-nasional-bulanan.html" target="_blank" rel="noreferrer">BPS — penumpang kereta api nasional bulanan</a> · <a href="https://assets.dataindonesia.id/2025/05/09/1746785018453-1-Laporan-Kumpulan-Data-Angkutan-Kereta-Api-Indonesia-10-Tahun-Terakhir-hingga-2024.pdf" target="_blank" rel="noreferrer">Rangkuman seri 2015–2024</a>.</p>
+</div>
+</section>
+<footer class="footer">Dashboard pembelajaran interaktif. Data historis dan moda memiliki cakupan yang berbeda seperti dijelaskan di atas. Satuan dibulatkan untuk memudahkan pembacaan.</footer>
+</div>
+<script>
+const annual = [
+ {year:2015,pass:325.95},{year:2016,pass:351.82},{year:2017,pass:393.27},{year:2018,pass:422.13},{year:2019,pass:428.01},
+ {year:2020,pass:186.13},{year:2021,pass:149.76},{year:2022,pass:277.12},{year:2023,pass:371.54},{year:2024,pass:424.08}
+];
+const monthly = [
+ {m:"Jan",pass:39.860},{m:"Feb",pass:37.166},{m:"Mar",pass:38.335},{m:"Apr",pass:40.459},{m:"Mei",pass:41.704},{m:"Jun",pass:41.888},
+ {m:"Jul",pass:45.605},{m:"Agu",pass:43.230},{m:"Sep",pass:42.481},{m:"Okt",pass:45.499},{m:"Nov",pass:42.590},{m:"Des",pass:45.829}
+];
+const modes = [
+ {name:"Jabodetabek",pass:328.154},{name:"Non-Jabodetabek (Jawa)",pass:89.665},{name:"MRT",pass:39.910},{name:"LRT",pass:26.620},
+ {name:"Kereta Bandara",pass:7.977},{name:"Non-Jawa (Sumatera + Sulawesi)",pass:6.262},{name:"Kereta cepat (Whoosh)",pass:6.056}
+];
+const $ = id => document.getElementById(id);
+const fmt = (n,d=2) => n.toLocaleString('id-ID',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmtInt = n => Math.round(n*1e6).toLocaleString('id-ID');
+const pct = n => (n>0?'+':'')+fmt(n,1)+'%';
+const yoy = annual.map((r,i)=>({...r,growth:i?((r.pass/annual[i-1].pass)-1)*100:null}));
+const totalModes = modes.reduce((a,b)=>a+b.pass,0);
+function svgLine(data, xKey, yKey, opts={}) {
+ const w=680,h=270,p={l:54,r:18,t:20,b:38}, iw=w-p.l-p.r,ih=h-p.t-p.b;
+ const vals=data.map(d=>d[yKey]), min=opts.zero?0:Math.floor(Math.min(...vals)*.85), max=Math.ceil(Math.max(...vals)*1.08);
+ const X=i=>p.l+(data.length===1?iw/2:i*iw/(data.length-1)), Y=v=>p.t+ih-(v-min)/(max-min||1)*ih;
+ let s=`<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="${opts.aria||'Grafik garis'}">`;
+ for(let j=0;j<5;j++){let v=min+(max-min)*j/4,y=Y(v);s+=`<line x1="${p.l}" y1="${y}" x2="${w-p.r}" y2="${y}" stroke="#e8eeeb"/><text x="${p.l-8}" y="${y+4}" font-size="10" fill="#718078" text-anchor="end">${fmt(v,0)}</text>`}
+ const points=data.map((d,i)=>`${X(i)},${Y(d[yKey])}`).join(' ');
+ s+=`<polyline points="${points}" fill="none" stroke="#087e65" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+ data.forEach((d,i)=>{s+=`<circle cx="${X(i)}" cy="${Y(d[yKey])}" r="4" fill="#087e65"><title>${d[xKey]}: ${fmt(d[yKey],2)}</title></circle><text x="${X(i)}" y="${h-13}" font-size="10" fill="#718078" text-anchor="middle">${d[xKey]}</text>`});
+ s+='</svg>';return s;
+}
+function svgBars(data,labelKey,valueKey,opts={}) {
+ const max=Math.max(...data.map(d=>d[valueKey]))*1.1;
+ return `<div>${data.map(d=>`<div class="barrow"><div>${d[labelKey]}</div><div class="track"><div class="fill" style="width:${Math.max(0,d[valueKey]/max*100)}%"></div></div><div class="barval">${fmt(d[valueKey],opts.decimals??1)}${opts.suffix??''}</div></div>`).join('')}</div>`;
+}
+function card(label,value,foot,delta='') {return `<div class="card"><div class="metric-label">${label}</div><div class="metric">${value}</div><div class="metric-foot">${foot||''}</div>${delta?`<div style="margin-top:8px"><span class="delta">${delta}</span></div>`:''}</div>`}
+function renderAnnual() {
+ const last=annual[annual.length-1],prev=annual[annual.length-2],growth=(last.pass/prev.pass-1)*100,peak=annual.reduce((a,b)=>a.pass>b.pass?a:b);
+ $('kpis').innerHTML=card('Jumlah penumpang 2024',fmt(last.pass,2)+' juta','Seri historis, cakupan BPS',pct(growth)+' dari 2023')+
+ card('Perubahan 2015–2024',pct((last.pass/annual[0].pass-1)*100),'Perubahan sepanjang periode')+
+ card('Tertinggi dalam seri',fmt(peak.pass,2)+' juta','Tahun '+peak.year)+
+ card('Terendah dalam seri',fmt(Math.min(...annual.map(d=>d.pass)),2)+' juta','Tahun 2021');
+ $('annualChart').innerHTML=svgLine(annual,'year','pass',{aria:'Tren penumpang tahunan dalam juta orang'});
+ $('growthChart').innerHTML=svgBars(yoy.filter(d=>d.growth!==null).map(d=>({year:d.year,growth:d.growth})).map(d=>({...d,label:String(d.year)})),'label','growth',{decimals:1,suffix:'%'});
+ $('tableDesc').textContent='Jumlah penumpang tahunan dan perubahan dibanding tahun sebelumnya.';
+ $('detailTable').innerHTML='<thead><tr><th>Tahun</th><th>Penumpang (juta)</th><th>Perubahan (juta)</th><th>Pertumbuhan YoY</th></tr></thead><tbody>'+yoy.map((d,i)=>`<tr><td>${d.year}</td><td>${fmt(d.pass,2)}</td><td>${i?fmt(d.pass-annual[i-1].pass,2):'—'}</td><td>${d.growth===null?'—':pct(d.growth)}</td></tr>`).join('')+'</tbody>';
+ const covidDrop=(annual.find(d=>d.year===2020).pass/annual.find(d=>d.year===2019).pass-1)*100;
+ const recovery=(last.pass/annual.find(d=>d.year===2019).pass-1)*100;
+ $('insights').innerHTML=`<div class="insight"><b>Penurunan tajam pada 2020</b>Volume turun ${fmt(Math.abs(covidDrop),1)}% dibanding 2019, sejalan dengan periode pandemi.</div><div class="insight"><b>Pemulihan setelah 2021</b>Pada 2024, volume dalam seri ini sudah ${recovery>=0?'melampaui':'belum menyamai'} angka 2019 sebesar ${fmt(Math.abs(recovery),1)}%.</div><div class="insight"><b>Perlu membaca cakupan data</b>Seri ini mengecualikan MRT, LRT, kereta bandara, dan Whoosh, sehingga bukan total semua moda rel.</div>`;
+}
+function renderMonthly() {
+ const sum=monthly.reduce((a,b)=>a+b.pass,0),avg=sum/monthly.length,peak=monthly.reduce((a,b)=>a.pass>b.pass?a:b),low=monthly.reduce((a,b)=>a.pass<b.pass?a:b);
+ $('kpis').innerHTML=card('Total penumpang 2024',fmt(sum,3)+' juta','Jumlah dari data bulanan')+card('Rata-rata per bulan',fmt(avg,2)+' juta','Rata-rata 12 bulan')+card('Bulan tertinggi',peak.m,fmt(peak.pass,3)+' juta')+card('Bulan terendah',low.m,fmt(low.pass,3)+' juta');
+ $('monthlyChart').innerHTML=svgLine(monthly,'m','pass',{aria:'Tren bulanan penumpang 2024'});
+ const qs=[{label:'Kuartal 1',pass:monthly.slice(0,3).reduce((a,b)=>a+b.pass,0)},{label:'Kuartal 2',pass:monthly.slice(3,6).reduce((a,b)=>a+b.pass,0)},{label:'Kuartal 3',pass:monthly.slice(6,9).reduce((a,b)=>a+b.pass,0)},{label:'Kuartal 4',pass:monthly.slice(9,12).reduce((a,b)=>a+b.pass,0)}];
+ $('quarterChart').innerHTML=svgBars(qs,'label','pass',{decimals:2,suffix:' jt'});
+ $('tableDesc').textContent='Jumlah penumpang bulanan tahun 2024.';
+ $('detailTable').innerHTML='<thead><tr><th>Bulan</th><th>Penumpang (juta)</th><th>Perubahan dari bulan sebelumnya</th></tr></thead><tbody>'+monthly.map((d,i)=>`<tr><td>${d.m}</td><td>${fmt(d.pass,3)}</td><td>${i?pct((d.pass/monthly[i-1].pass-1)*100):'—'}</td></tr>`).join('')+'</tbody>';
+ $('insights').innerHTML=`<div class="insight"><b>Bulan tertinggi: ${peak.m}</b>Volume tercatat ${fmt(peak.pass,3)} juta penumpang.</div><div class="insight"><b>Bulan terendah: ${low.m}</b>Volume tercatat ${fmt(low.pass,3)} juta penumpang.</div><div class="insight"><b>Rata-rata bulanan</b>Sekitar ${fmt(avg,2)} juta penumpang per bulan selama 2024.</div>`;
+}
+function renderModes() {
+ $('kpis').innerHTML=card('Total dari kategori moda',fmt(totalModes,3)+' juta','Cakupan luas, tahun 2024')+card('Moda terbesar',modes[0].name,fmt(modes[0].pass,3)+' juta')+card('Kontribusi Jabodetabek',fmt(modes[0].pass/totalModes*100,1)+'%','Dari total kategori')+card('Moda dengan volume terkecil',modes[modes.length-1].name,fmt(modes[modes.length-1].pass,3)+' juta');
+ $('modeBars').innerHTML=svgBars(modes,'name','pass',{decimals:2,suffix:' jt'});
+ $('modeShare').innerHTML=svgBars(modes.map(d=>({...d,share:d.pass/totalModes*100})),'name','share',{decimals:1,suffix:'%'});
+ $('tableDesc').textContent='Perbandingan kategori moda transportasi pada 2024.';
+ $('detailTable').innerHTML='<thead><tr><th>Moda/kategori</th><th>Penumpang (juta)</th><th>Persentase total</th></tr></thead><tbody>'+modes.map(d=>`<tr><td>${d.name}</td><td>${fmt(d.pass,3)}</td><td>${fmt(d.pass/totalModes*100,2)}%</td></tr>`).join('')+`<tr><td><b>Total kategori pada tabel</b></td><td><b>${fmt(totalModes,3)}</b></td><td><b>100%</b></td></tr></tbody>`;
+ $('insights').innerHTML=`<div class="insight"><b>Jabodetabek mendominasi</b>Kontribusinya sekitar ${fmt(modes[0].pass/totalModes*100,1)}% dari total kategori.</div><div class="insight"><b>Moda rel perkotaan penting</b>MRT dan LRT tercatat terpisah dari kategori kereta api utama.</div><div class="insight"><b>Jangan campur cakupan</b>Data moda 2024 tidak setara dengan seri historis 2015–2024.</div>`;
+}
+function render() {
+ const scope=$('scope').value;
+ $('annualSection').hidden=scope!=='annual';$('monthlySection').hidden=scope!=='monthly';$('modesSection').hidden=scope!=='modes';
+ if(scope==='annual')renderAnnual();else if(scope==='monthly')renderMonthly();else renderModes();
+}
+$('scope').addEventListener('change',render);
+$('compare').addEventListener('change',()=>{const y=Number($('compare').value);const d=annual.find(x=>x.year===y);if(d&&$('scope').value==='annual'){const el=$('kpis').children[0];if(el)el.querySelector('.metric-foot').textContent='Tahun pembanding '+y+': '+fmt(d.pass,2)+' juta penumpang';}});
+$('reset').addEventListener('click',()=>{$('scope').value='annual';$('compare').value='2024';render();});
+render();
+</script>
+</body>
+</html>
