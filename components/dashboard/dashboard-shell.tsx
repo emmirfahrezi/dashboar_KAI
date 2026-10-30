@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { DashboardScope, CompareYear } from "@/types/dashboard";
 import { DashboardSidebar } from "./dashboard-sidebar";
-import { DashboardTopbar } from "./dashboard-topbar";
 import { DataSourceNotice } from "./data-source-notice";
 import { KPISection } from "./kpi-section";
 import { AnnualCharts } from "./annual-charts";
@@ -13,7 +12,7 @@ import { DataTableSection } from "./data-table-section";
 import { InsightsSection } from "./insights-section";
 import { DataSourceSection } from "./data-source-section";
 import { DashboardFooter } from "./dashboard-footer";
-import { Sparkles, ArrowUpRight } from "lucide-react";
+import { Sparkles, ArrowUpRight, Menu } from "lucide-react";
 
 export function DashboardShell() {
   const [currentView, setCurrentView] = useState<DashboardScope | "all">("all");
@@ -47,14 +46,26 @@ export function DashboardShell() {
 
       {/* Main Content Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Top Navbar */}
-        <DashboardTopbar
-          currentView={currentView}
-          setCurrentView={setCurrentView}
-          setScope={setScope}
-          onOpenSidebar={() => setSidebarOpen(true)}
-          onReset={handleReset}
-        />
+        {/* Mobile Header (Hanya tampil di layar kecil/HP agar bisa buka sidebar) */}
+        <div className="flex items-center justify-between border-b border-white/60 bg-white/60 px-4 py-3 backdrop-blur-md dark:border-white/10 dark:bg-slate-900/60 lg:hidden">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-xs font-black text-white shadow-xs">
+              KAI
+            </div>
+            <span className="text-xs font-extrabold tracking-tight text-slate-800 dark:text-slate-100">
+              KAI Analytics
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Buka menu navigasi"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/80 bg-white/80 text-slate-700 shadow-2xs backdrop-blur-md hover:bg-slate-50 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        </div>
 
         {/* Scrollable Dashboard Body */}
         <main className="flex-1 space-y-7 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
