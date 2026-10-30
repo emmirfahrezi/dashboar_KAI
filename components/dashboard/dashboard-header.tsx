@@ -28,8 +28,14 @@ export function DashboardHeader({
           KAI
         </div>
         <div>
-          <div className="text-[11px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400">
-            Information Dashboard
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-black uppercase tracking-widest text-blue-600 dark:text-blue-400">
+              Information Dashboard
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full border border-blue-200/80 bg-blue-50/80 px-2 py-0.5 text-[9px] font-bold text-blue-700 backdrop-blur-xs dark:border-blue-800 dark:bg-blue-950/60 dark:text-blue-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              BPS WebAPI Connected
+            </span>
           </div>
           <h1 className="text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl lg:text-3xl dark:text-slate-50">
             Penumpang Kereta Api Indonesia
