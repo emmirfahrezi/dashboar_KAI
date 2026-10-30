@@ -46,26 +46,15 @@ export function DashboardShell() {
 
       {/* Main Content Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Mobile Header (Hanya tampil di layar kecil/HP agar bisa buka sidebar) */}
-        <div className="flex items-center justify-between border-b border-white/60 bg-white/60 px-4 py-3 backdrop-blur-md dark:border-white/10 dark:bg-slate-900/60 lg:hidden">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-xs font-black text-white shadow-xs">
-              KAI
-            </div>
-            <span className="text-xs font-extrabold tracking-tight text-slate-800 dark:text-slate-100">
-              KAI Analytics
-            </span>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setSidebarOpen(true)}
-            aria-label="Buka menu navigasi"
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/80 bg-white/80 text-slate-700 shadow-2xs backdrop-blur-md hover:bg-slate-50 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-        </div>
+        {/* Floating Mobile Menu Toggle (Tanpa bilah/bar di atas sama sekali) */}
+        <button
+          type="button"
+          onClick={() => setSidebarOpen(true)}
+          aria-label="Buka menu navigasi"
+          className="fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-xl shadow-blue-700/35 ring-2 ring-white/60 backdrop-blur-xl transition-all active:scale-95 lg:hidden"
+        >
+          <Menu className="h-6 w-6" />
+        </button>
 
         {/* Scrollable Dashboard Body */}
         <main className="flex-1 space-y-7 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
