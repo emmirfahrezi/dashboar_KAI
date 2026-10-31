@@ -203,7 +203,7 @@ export function DataTableSection({ scope }: DataTableSectionProps) {
                         {row.isPeak ? (
                           <span className="inline-flex items-center gap-1 rounded-full border border-[#cbe8db] bg-[#e6f4ee] px-2.5 py-0.5 text-[10px] font-extrabold text-[#173e30] shadow-2xs">
                             <Award className="h-3 w-3 text-[#145d47]" />
-                            Paling Banyak (Puncak)
+                            {selectedTableYear === 2026 ? "Puncak Tahun Berjalan" : "Paling Banyak (Puncak)"}
                           </span>
                         ) : row.m === "Feb" ? (
                           <span className="text-[10px] text-slate-400">
@@ -217,6 +217,18 @@ export function DataTableSection({ scope }: DataTableSectionProps) {
                   );
                 })}
               </tbody>
+              {selectedTableYear === 2026 && (
+                <tfoot>
+                  <tr>
+                    <td
+                      colSpan={5}
+                      className="border-t border-slate-100 bg-[#f8faf9] px-5 py-2.5 text-[11px] text-slate-500"
+                    >
+                      *Catatan: Tahun 2026 merupakan tahun berjalan resmi s.d. Oktober 2026. Data bulan November & Desember belum rilis.
+                    </td>
+                  </tr>
+                </tfoot>
+              )}
             </table>
           )}
 

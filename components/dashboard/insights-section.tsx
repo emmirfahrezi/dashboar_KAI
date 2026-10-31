@@ -49,13 +49,13 @@ export function InsightsSection({ scope }: InsightsSectionProps) {
 
     insights = [
       {
-        title: `Kapan Penumpang Paling Banyak? Puncak di ${peak.fullName}`,
-        desc: `Volume penumpang tertinggi setiap tahun selalu terjadi di bulan ${peak.fullName} (${formatNumber(peak.pass, 2)} juta) karena musim liburan Natal dan Tahun Baru.`,
+        title: `Kapan Penumpang Paling Banyak? Puncak Tahun Berjalan di ${peak.fullName}`,
+        desc: `Pada tahun berjalan 2026 (Jan–Okt), volume penumpang tertinggi tercatat di bulan ${peak.fullName} (${formatNumber(peak.pass, 2)} juta) didorong momentum libur sekolah. (Catatan: November & Desember belum rilis).`,
         icon: <Award className="h-4 w-4 text-[#145d47]" />,
       },
       {
-        title: "Lonjakan Musiman: Libur Sekolah & Lebaran",
-        desc: `Selain Desember, bulan Juli (${formatNumber(MONTHLY_DATA_2026[6].pass, 2)} juta) dan April (${formatNumber(MONTHLY_DATA_2026[3].pass, 2)} juta) mengalami lonjakan kenaikan tajam seiring libur sekolah dan arus mudik.`,
+        title: "Lonjakan Musiman: Mudik Lebaran di Bulan April",
+        desc: `Bulan April (${formatNumber(MONTHLY_DATA_2026[3].pass, 2)} juta) mencatatkan lonjakan kenaikan tajam seiring arus mudik Lebaran di seluruh lintas operasional.`,
         icon: <TrendingUp className="h-4 w-4 text-[#145d47]" />,
       },
       {

@@ -38,6 +38,7 @@ export const MONTH_NAMES: { [key: string]: string } = {
 };
 
 // Raw Monthly Data by Year
+// Catatan: Tahun 2026 merupakan tahun berjalan resmi s.d. Oktober 2026 (November & Desember belum rilis)
 const RAW_MONTHLY_DATA: Record<number, { m: string; pass: number }[]> = {
   2026: [
     { m: "Jan", pass: 42.15 },
@@ -46,12 +47,10 @@ const RAW_MONTHLY_DATA: Record<number, { m: string; pass: number }[]> = {
     { m: "Apr", pass: 46.50 }, // Lonjakan Mudik Lebaran
     { m: "Mei", pass: 44.20 },
     { m: "Jun", pass: 45.10 },
-    { m: "Jul", pass: 48.90 }, // Liburan Sekolah
+    { m: "Jul", pass: 48.90 }, // Liburan Sekolah (Puncak Tertinggi Tahun Berjalan)
     { m: "Agu", pass: 45.80 },
     { m: "Sep", pass: 44.60 },
-    { m: "Okt", pass: 47.10 },
-    { m: "Nov", pass: 44.50 },
-    { m: "Des", pass: 49.65 }, // Puncak Libur Akhir Tahun
+    { m: "Okt", pass: 47.10 }, // Data rilis resmi terkini (Nov & Des belum rilis)
   ],
   2025: [
     { m: "Jan", pass: 40.90 },
@@ -150,6 +149,7 @@ export const MODES_SHARE_DATA: ModeWithShareRecord[] = MODES_DATA_2024.map(
 );
 
 export function getQuarterData(monthlyData: MonthlyRecord[]): QuarterRecord[] {
+  const isPartial = monthlyData.length === 10;
   return [
     {
       label: "Kuartal 1 (Jan-Mar)",
@@ -164,7 +164,7 @@ export function getQuarterData(monthlyData: MonthlyRecord[]): QuarterRecord[] {
       pass: monthlyData.slice(6, 9).reduce((a, b) => a + b.pass, 0),
     },
     {
-      label: "Kuartal 4 (Okt-Des)",
+      label: isPartial ? "Kuartal 4 (Baru Okt)*" : "Kuartal 4 (Okt-Des)",
       pass: monthlyData.slice(9, 12).reduce((a, b) => a + b.pass, 0),
     },
   ];

@@ -128,7 +128,7 @@ export function DashboardShell() {
                     521,80 Jt
                   </div>
                   <div className="mt-0.5 text-[10px] font-bold text-[#5fe0b0]">
-                    ↑ +8,7% vs 2025
+                    Realisasi s.d. Okt: 445,55 Jt
                   </div>
                 </div>
 
@@ -136,13 +136,13 @@ export function DashboardShell() {
                 <div className="min-w-[145px] rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-md shadow-xs">
                   <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-300">
                     <Calendar className="h-3.5 w-3.5 text-slate-300" />
-                    <span>Puncak Bulanan</span>
+                    <span>Puncak 2026 (s.d. Okt)</span>
                   </div>
                   <div className="mt-1 text-2xl font-black tracking-tight text-white">
-                    Desember
+                    Juli
                   </div>
-                  <div className="mt-0.5 text-[10px] font-medium text-slate-300">
-                    ≈ 49,65 Jt (± 9,5% dari total)
+                  <div className="mt-0.5 text-[10px] font-medium text-[#5fe0b0]">
+                    48,90 Jt (Libur Sekolah)
                   </div>
                 </div>
               </div>

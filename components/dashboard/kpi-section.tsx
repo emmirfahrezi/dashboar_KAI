@@ -94,24 +94,24 @@ export function KPISection({
     return (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <KPICard
-          label="Total Penumpang 2026"
+          label="Realisasi 2026 (s.d. Okt)"
           value={`${formatNumber(sum, 2)} juta`}
-          foot="Akumulasi bulanan jaringan rel"
+          foot="Akumulasi 10 bulan tahun berjalan"
           icon={<Users className="h-4 w-4" />}
           sparklineVariant="growth"
         />
         <KPICard
           label="Rata-rata per Bulan"
           value={`${formatNumber(avg, 2)} juta`}
-          foot="Rata-rata mobilitas bulanan"
+          foot="Rata-rata mobilitas Jan–Okt"
           icon={<Calendar className="h-4 w-4" />}
           sparklineVariant="growth"
         />
         <KPICard
-          label="Bulan Paling Banyak"
+          label="Puncak Tahun Berjalan"
           value={`${peak.m} (${formatNumber(peak.pass, 2)} jt)`}
-          foot="Puncak liburan Nataru (Desember)"
-          delta="★ Rekor Tertinggi"
+          foot="Puncak liburan sekolah (Juli)"
+          delta="★ Rekor s.d. Okt"
           deltaPositive={true}
           icon={<Train className="h-4 w-4" />}
           sparklineVariant="peak"

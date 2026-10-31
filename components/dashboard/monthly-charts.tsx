@@ -103,16 +103,16 @@ export function MonthlyCharts() {
                 Grafik Batang Penumpang per Bulan ({selectedYear})
               </CardTitle>
               <CardDescription>
-                Menjawab kapan penumpang paling banyak: Puncak tertinggi tahun {selectedYear} tercatat di bulan{" "}
+                Menjawab kapan penumpang paling banyak: {selectedYear === 2026 ? "Puncak tertinggi tahun berjalan (Jan–Okt) tercatat di bulan " : `Puncak tertinggi tahun ${selectedYear} tercatat di bulan `}
                 <strong className="text-[#145d47] font-bold">
                   {peakMonth.fullName} ({formatNumber(peakMonth.pass, 2)} juta)
                 </strong>
-                .
+                {selectedYear === 2026 ? " pada masa liburan sekolah (November & Desember belum rilis)." : "."}
               </CardDescription>
             </div>
             <div className="flex items-center gap-2 self-start rounded-full border border-[#cbe8db] bg-[#e6f4ee] px-3.5 py-1 text-xs font-bold text-[#173e30] shadow-2xs">
               <Award className="h-3.5 w-3.5 text-[#145d47]" />
-              <span>Puncak: {peakMonth.fullName}</span>
+              <span>Puncak {selectedYear === 2026 ? "s.d. Okt" : selectedYear}: {peakMonth.fullName}</span>
             </div>
           </div>
         </CardHeader>
@@ -204,7 +204,9 @@ export function MonthlyCharts() {
                 <span>Pola Musiman:</span>
               </div>
               <p className="mt-1 leading-relaxed">
-                Kuartal 3 (liburan sekolah pertengahan tahun) dan Kuartal 4 (liburan Natal & Tahun Baru) secara konsisten menjadi periode dengan pergerakan penumpang paling padat di seluruh jaringan KAI.
+                {selectedYear === 2026
+                  ? "Kuartal 3 (liburan sekolah pertengahan tahun) menjadi periode terpadat tahun berjalan 2026. Kuartal 4 baru mencakup data resmi bulan Oktober (November & Desember belum rilis)."
+                  : "Kuartal 3 (liburan sekolah pertengahan tahun) dan Kuartal 4 (liburan Natal & Tahun Baru) secara konsisten menjadi periode dengan pergerakan penumpang paling padat di seluruh jaringan KAI."}
               </p>
             </div>
           </CardContent>
