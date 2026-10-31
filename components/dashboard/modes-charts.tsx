@@ -22,7 +22,7 @@ export function ModesCharts() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Penumpang Berdasarkan Moda Transportasi</CardTitle>
-            <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400">
+            <span className="text-[11px] font-bold text-[#145d47]">
               Satuan: Juta Orang
             </span>
           </div>
@@ -45,7 +45,7 @@ export function ModesCharts() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Kontribusi Pangsa Pasar Moda (%)</CardTitle>
-            <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400">
+            <span className="text-[11px] font-bold text-[#145d47]">
               Pangsa Rel
             </span>
           </div>

@@ -39,8 +39,8 @@ export function DashboardShell() {
         onClose={() => setSidebarOpen(false)}
       />
 
-      {/* Main Content Area */}
-      <div className="flex flex-1 flex-col overflow-x-hidden">
+      {/* Main Content Area (Offset by 64 on Desktop to accommodate fixed sidebar) */}
+      <div className="flex flex-1 flex-col min-w-0 lg:pl-64 overflow-x-hidden">
         {/* Floating Mobile Menu Toggle */}
         <button
           type="button"

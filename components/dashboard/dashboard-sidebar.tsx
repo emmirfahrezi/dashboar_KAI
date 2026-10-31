@@ -71,11 +71,11 @@ export function DashboardSidebar({
         />
       )}
 
-      {/* Sidebar Container */}
+      {/* Sidebar Container - Fixed on Desktop ("fix aja diem"), Overlay Drawer on Mobile */}
       <aside
         className={cn(
-          "fixed top-0 bottom-0 left-0 z-50 flex w-64 flex-col justify-between bg-[#0e261f] p-5 text-white transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 shadow-2xl lg:shadow-none",
-          isOpen ? "translate-x-0" : "-translate-x-full"
+          "fixed top-0 bottom-0 left-0 z-40 flex w-64 flex-col justify-between bg-[#0e261f] p-5 text-white transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none overflow-y-auto",
+          isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >
         <div className="flex flex-col space-y-7">

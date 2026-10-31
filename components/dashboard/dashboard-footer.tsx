@@ -2,7 +2,7 @@ import React from "react";
 
 export function DashboardFooter() {
   return (
-    <footer className="mt-8 border-t border-white/60 pt-6 text-center text-xs text-slate-500 dark:border-white/10 dark:text-slate-400 sm:text-left">
+    <footer className="mt-8 border-t border-slate-200/80 pt-6 text-center text-xs text-slate-500 sm:text-left">
       <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
         <p>
           Dashboard Pembelajaran Interaktif Penumpang Kereta Api Indonesia. Data

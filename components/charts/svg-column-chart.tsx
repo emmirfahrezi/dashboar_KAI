@@ -57,15 +57,15 @@ export function SvgColumnChart({
       >
         <defs>
           <linearGradient id="barGradientBlueRegular" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#2563eb" stopOpacity="0.95" />
-            <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.75" />
+            <stop offset="0%" stopColor="#145d47" stopOpacity="0.95" />
+            <stop offset="100%" stopColor="#1e735a" stopOpacity="0.8" />
           </linearGradient>
           <linearGradient id="barGradientBluePeak" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#0284c7" stopOpacity="1" />
-            <stop offset="100%" stopColor="#0369a1" stopOpacity="0.9" />
+            <stop offset="0%" stopColor="#0e261f" stopOpacity="1" />
+            <stop offset="100%" stopColor="#163f33" stopOpacity="0.95" />
           </linearGradient>
           <filter id="barShadowBlue" x="-10%" y="-10%" width="120%" height="120%">
-            <feDropShadow dx="0" dy="3" stdDeviation="2.5" floodColor="#1e3a8a" floodOpacity="0.18" />
+            <feDropShadow dx="0" dy="3" stdDeviation="2.5" floodColor="#0e261f" floodOpacity="0.18" />
           </filter>
         </defs>
 
@@ -118,7 +118,7 @@ export function SvgColumnChart({
                   y={padding.top}
                   width={slotWidth - 4}
                   height={innerHeight}
-                  fill="#2563eb"
+                  fill="#145d47"
                   fillOpacity="0.08"
                   rx="8"
                 />
@@ -133,8 +133,8 @@ export function SvgColumnChart({
                     width="52"
                     height="15"
                     rx="7.5"
-                    fill="#0284c7"
-                    stroke="#ffffff"
+                    fill="#0e261f"
+                    stroke="#2b5949"
                     strokeWidth="1"
                     className="shadow-xs"
                   />
@@ -142,7 +142,7 @@ export function SvgColumnChart({
                     x={xSlotCenter}
                     y={barY - 13}
                     textAnchor="middle"
-                    fill="#ffffff"
+                    fill="#5fe0b0"
                     className="text-[8.5px] font-extrabold tracking-wider"
                   >
                     ★ PUNCAK
@@ -161,7 +161,7 @@ export function SvgColumnChart({
                   isPeak
                     ? "url(#barGradientBluePeak)"
                     : isHovered
-                    ? "#1d4ed8"
+                    ? "#0e261f"
                     : "url(#barGradientBlueRegular)"
                 }
                 filter="url(#barShadowBlue)"
@@ -175,10 +175,10 @@ export function SvgColumnChart({
                 textAnchor="middle"
                 className={`text-[10px] font-mono font-bold transition-colors ${
                   isPeak
-                    ? "fill-sky-700 dark:fill-sky-400 font-extrabold"
+                    ? "fill-[#0e261f] font-extrabold"
                     : isHovered
-                    ? "fill-blue-700 dark:fill-blue-300"
-                    : "fill-slate-600 dark:fill-slate-400"
+                    ? "fill-[#145d47]"
+                    : "fill-slate-600"
                 }`}
               >
                 {formatNumber(item.pass, 1)}
@@ -191,10 +191,10 @@ export function SvgColumnChart({
                 textAnchor="middle"
                 className={`text-[11px] font-semibold transition-colors ${
                   isPeak
-                    ? "fill-sky-700 dark:fill-sky-400 font-bold"
+                    ? "fill-[#0e261f] font-bold"
                     : isHovered
-                    ? "fill-blue-700 dark:fill-blue-400 font-bold"
-                    : "fill-slate-600 dark:fill-slate-400"
+                    ? "fill-[#145d47] font-bold"
+                    : "fill-slate-600"
                 }`}
               >
                 {item.m}
@@ -204,10 +204,10 @@ export function SvgColumnChart({
         })}
       </svg>
 
-      {/* Floating Hover Tooltip with Glassmorphism */}
+      {/* Floating Hover Tooltip */}
       {hoveredIdx !== null && (
         <div
-          className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full transform rounded-xl border border-white/80 bg-white/85 p-3 shadow-xl backdrop-blur-md transition-all duration-75 dark:border-white/10 dark:bg-slate-900/90"
+          className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full transform rounded-xl border border-slate-200 bg-white/95 p-3 shadow-xl backdrop-blur-md transition-all duration-75"
           style={{
             left: `${
               ((padding.left +
@@ -221,27 +221,27 @@ export function SvgColumnChart({
             }%`,
           }}
         >
-          <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-slate-100 text-xs">
+          <div className="flex items-center gap-1.5 font-bold text-slate-900 text-xs">
             {data[hoveredIdx].isPeak && (
-              <Crown className="h-3.5 w-3.5 text-sky-600 fill-sky-600" />
+              <Crown className="h-3.5 w-3.5 text-[#145d47] fill-[#145d47]" />
             )}
             <span>
               {data[hoveredIdx].fullName} ({data[hoveredIdx].m})
             </span>
           </div>
 
-          <div className="mt-1 font-mono text-sm font-extrabold text-blue-600 dark:text-blue-400">
+          <div className="mt-1 font-mono text-sm font-extrabold text-[#145d47]">
             {formatNumber(data[hoveredIdx].pass, 2)} juta penumpang
           </div>
 
           {data[hoveredIdx].diffFromPrev !== null && data[hoveredIdx].diffFromPrev !== undefined ? (
             <div className="mt-1.5 flex items-center gap-1 text-[11px]">
-              <span className="text-slate-500 dark:text-slate-400">vs bulan lalu:</span>
+              <span className="text-slate-500">vs bulan lalu:</span>
               <span
                 className={`inline-flex items-center font-bold ${
                   data[hoveredIdx].diffFromPrev! >= 0
-                    ? "text-blue-600 dark:text-blue-400"
-                    : "text-rose-600 dark:text-rose-400"
+                    ? "text-[#145d47]"
+                    : "text-rose-600"
                 }`}
               >
                 {data[hoveredIdx].diffFromPrev! >= 0 ? (

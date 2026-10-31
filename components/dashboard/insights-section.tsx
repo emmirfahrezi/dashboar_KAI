@@ -30,17 +30,17 @@ export function InsightsSection({ scope }: InsightsSectionProps) {
       {
         title: "Pencapaian Rekor Baru 2026 (>500 Juta)",
         desc: `Pada 2026, volume penumpang kereta api menembus angka ${formatNumber(p2026, 2)} juta, melampaui masa pra-pandemi 2019 sebesar ${formatNumber(totalGrowth, 1)}%.`,
-        icon: <Award className="h-4 w-4 text-blue-600 dark:text-blue-400" />,
+        icon: <Award className="h-4 w-4 text-[#145d47]" />,
       },
       {
         title: "Penurunan Drastis Periode Pandemi (2020–2021)",
         desc: `Volume anjlok ${formatNumber(Math.abs(covidDrop), 1)}% pada 2020 akibat pembatasan sosial ketat, sebelum mulai bangkit secara konsisten sejak 2022.`,
-        icon: <ShieldAlert className="h-4 w-4 text-rose-500 dark:text-rose-400" />,
+        icon: <ShieldAlert className="h-4 w-4 text-rose-500" />,
       },
       {
         title: "Ekspansi & Peningkatan Kapasitas Rel",
         desc: "Kenaikan pesat 2024–2026 ditopang oleh elektrifikasi jalur baru, penambahan armada KRL, serta operasional jalur rel terintegrasi antarmoda.",
-        icon: <TrendingUp className="h-4 w-4 text-blue-600 dark:text-blue-400" />,
+        icon: <TrendingUp className="h-4 w-4 text-[#145d47]" />,
       },
     ];
   } else if (scope === "monthly") {
@@ -51,17 +51,17 @@ export function InsightsSection({ scope }: InsightsSectionProps) {
       {
         title: `Kapan Penumpang Paling Banyak? Puncak di ${peak.fullName}`,
         desc: `Volume penumpang tertinggi setiap tahun selalu terjadi di bulan ${peak.fullName} (${formatNumber(peak.pass, 2)} juta) karena musim liburan Natal dan Tahun Baru.`,
-        icon: <Award className="h-4 w-4 text-sky-600 dark:text-sky-400" />,
+        icon: <Award className="h-4 w-4 text-[#145d47]" />,
       },
       {
         title: "Lonjakan Musiman: Libur Sekolah & Lebaran",
         desc: `Selain Desember, bulan Juli (${formatNumber(MONTHLY_DATA_2026[6].pass, 2)} juta) dan April (${formatNumber(MONTHLY_DATA_2026[3].pass, 2)} juta) mengalami lonjakan kenaikan tajam seiring libur sekolah dan arus mudik.`,
-        icon: <TrendingUp className="h-4 w-4 text-blue-600 dark:text-blue-400" />,
+        icon: <TrendingUp className="h-4 w-4 text-[#145d47]" />,
       },
       {
         title: `Titik Terendah di ${low.fullName}`,
         desc: `Bulan ${low.fullName} mencatatkan volume terendah (${formatNumber(low.pass, 2)} juta) terutama dipengaruhi jumlah hari kalender yang paling sedikit (28-29 hari).`,
-        icon: <Info className="h-4 w-4 text-blue-500 dark:text-blue-400" />,
+        icon: <Info className="h-4 w-4 text-[#145d47]" />,
       },
     ];
   } else {
@@ -73,17 +73,17 @@ export function InsightsSection({ scope }: InsightsSectionProps) {
       {
         title: "Jabodetabek Sebagai Tulang Punggung",
         desc: `KRL Jabodetabek menyumbang ${formatNumber((jabodetabek.pass / TOTAL_MODES_PASSENGERS) * 100, 1)}% dari total seluruh moda rel di Indonesia dengan ${formatNumber(jabodetabek.pass, 2)} juta perjalanan.`,
-        icon: <TrendingUp className="h-4 w-4 text-blue-600 dark:text-blue-400" />,
+        icon: <TrendingUp className="h-4 w-4 text-[#145d47]" />,
       },
       {
         title: "Ekspansi Kereta Cepat & Perkotaan",
         desc: `MRT, LRT, dan KCIC Whoosh (${formatNumber(whoosh?.pass || 6.056, 2)} juta) mempercepat transisi gaya hidup komuter modern antar-kota dan urban.`,
-        icon: <Sparkles className="h-4 w-4 text-sky-600 dark:text-sky-400" />,
+        icon: <Sparkles className="h-4 w-4 text-[#145d47]" />,
       },
       {
         title: "Integrasi Antarmoda Modern",
         desc: "Konektivitas stasiun sentral (Manggarai, Halim, Sudirman) mempermudah perpindahan penumpang antarkereta konvensional, MRT, LRT, dan Kereta Cepat.",
-        icon: <Info className="h-4 w-4 text-blue-500 dark:text-blue-400" />,
+        icon: <Info className="h-4 w-4 text-[#145d47]" />,
       },
     ];
   }
@@ -91,12 +91,12 @@ export function InsightsSection({ scope }: InsightsSectionProps) {
   return (
     <section className="space-y-3">
       <div className="flex items-center gap-2">
-        <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-        <h2 className="text-base font-bold tracking-tight text-slate-900 dark:text-slate-100">
+        <Sparkles className="h-4 w-4 text-[#145d47]" />
+        <h2 className="text-base font-bold tracking-tight text-slate-900">
           Insight yang Dapat Dibaca dari Dashboard
         </h2>
       </div>
-      <p className="text-xs text-slate-500 dark:text-slate-400">
+      <p className="text-xs text-slate-500">
         Interpretasi otomatis berdasarkan dataset yang sedang aktif ditampilkan.
       </p>
 
@@ -104,15 +104,15 @@ export function InsightsSection({ scope }: InsightsSectionProps) {
         {insights.map((item, idx) => (
           <div
             key={idx}
-            className="flex flex-col rounded-2xl border border-white/75 border-l-4 border-l-blue-600 bg-white/70 p-4.5 shadow-lg shadow-blue-900/5 backdrop-blur-xl transition-all duration-300 hover:bg-white/85 hover:-translate-y-0.5 dark:border-white/10 dark:border-l-blue-500 dark:bg-slate-900/65"
+            className="flex flex-col rounded-2xl border border-slate-200/80 border-l-4 border-l-[#145d47] bg-white p-4.5 shadow-xs transition-all duration-300 hover:shadow-sm"
           >
-            <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-slate-100 text-xs sm:text-sm">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
+            <div className="flex items-center gap-2 font-bold text-slate-900 text-xs sm:text-sm">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-[#e8f5ef] text-[#145d47]">
                 {item.icon}
               </span>
               <span>{item.title}</span>
             </div>
-            <p className="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+            <p className="mt-2 text-xs leading-relaxed text-slate-600">
               {item.desc}
             </p>
           </div>
