@@ -19,7 +19,7 @@ export function SvgLineChart<T>({
   data,
   xKey,
   yKey,
-  height = 280,
+  height = 270,
   width = 680,
   ariaLabel = "Grafik Tren Garis",
   unit = "juta",
@@ -36,7 +36,7 @@ export function SvgLineChart<T>({
     );
   }
 
-  const padding = { top: 25, right: 24, bottom: 45, left: 58 };
+  const padding = { top: 25, right: 24, bottom: 40, left: 56 };
   const innerWidth = width - padding.left - padding.right;
   const innerHeight = height - padding.top - padding.bottom;
 
@@ -58,8 +58,8 @@ export function SvgLineChart<T>({
   };
 
   // Generate 5 grid ticks
-  const ticks = Array.from({ length: 5 }, (_, i) => {
-    const val = minValue + (range * i) / 4;
+  const ticks = Array.from({ length: 6 }, (_, i) => {
+    const val = minValue + (range * i) / 5;
     return {
       value: val,
       y: getY(val),
@@ -87,20 +87,11 @@ export function SvgLineChart<T>({
         aria-label={ariaLabel}
       >
         <defs>
-          <linearGradient id="areaGradientBlue" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#2563eb" stopOpacity="0.25" />
-            <stop offset="60%" stopColor="#38bdf8" stopOpacity="0.08" />
-            <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.0" />
+          <linearGradient id="areaGradientForest" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#145d47" stopOpacity="0.22" />
+            <stop offset="70%" stopColor="#145d47" stopOpacity="0.05" />
+            <stop offset="100%" stopColor="#145d47" stopOpacity="0.0" />
           </linearGradient>
-          <filter id="shadowBlue" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow
-              dx="0"
-              dy="3"
-              stdDeviation="3.5"
-              floodColor="#1d4ed8"
-              floodOpacity="0.28"
-            />
-          </filter>
         </defs>
 
         {/* Horizontal grid lines and Y-axis labels */}
@@ -111,33 +102,32 @@ export function SvgLineChart<T>({
               y1={tick.y}
               x2={width - padding.right}
               y2={tick.y}
-              className="stroke-slate-200/70 dark:stroke-slate-800"
-              strokeDasharray={idx === 0 ? "none" : "3,3"}
+              className="stroke-slate-100"
+              strokeDasharray={idx === 0 ? "none" : "2,2"}
               strokeWidth="1"
             />
             <text
               x={padding.left - 10}
               y={tick.y + 3.5}
               textAnchor="end"
-              className="fill-slate-400 dark:fill-slate-500 font-mono text-[10px]"
+              className="fill-slate-400 font-mono text-[10px]"
             >
-              {formatNumber(tick.value, 0)}
+              {Math.round(tick.value)}M
             </text>
           </g>
         ))}
 
         {/* Area fill */}
-        <path d={areaPath} fill="url(#areaGradientBlue)" />
+        <path d={areaPath} fill="url(#areaGradientForest)" />
 
         {/* Primary Line */}
         <polyline
           points={points}
           fill="none"
-          stroke="#2563eb"
-          strokeWidth="3.5"
+          stroke="#145d47"
+          strokeWidth="2.8"
           strokeLinecap="round"
           strokeLinejoin="round"
-          filter="url(#shadowBlue)"
         />
 
         {/* Data points and X-axis labels */}
@@ -160,21 +150,9 @@ export function SvgLineChart<T>({
                   y1={padding.top}
                   x2={cx}
                   y2={padding.top + innerHeight}
-                  className="stroke-blue-500/50 dark:stroke-blue-400/40"
+                  className="stroke-[#145d47]/40"
                   strokeDasharray="2,2"
                   strokeWidth="1.5"
-                />
-              )}
-
-              {/* Hover highlight circle */}
-              {isHovered && (
-                <circle
-                  cx={cx}
-                  cy={cy}
-                  r="9"
-                  fill="#2563eb"
-                  fillOpacity="0.25"
-                  className="animate-ping"
                 />
               )}
 
@@ -182,10 +160,10 @@ export function SvgLineChart<T>({
               <circle
                 cx={cx}
                 cy={cy}
-                r={isHovered ? 6 : 4}
-                fill="#ffffff"
-                stroke="#2563eb"
-                strokeWidth={isHovered ? 3.5 : 2.5}
+                r={isHovered ? 5.5 : 3.8}
+                fill="#145d47"
+                stroke="#ffffff"
+                strokeWidth={isHovered ? 2.5 : 1.8}
                 className="transition-all duration-150"
               />
 
@@ -196,8 +174,8 @@ export function SvgLineChart<T>({
                 textAnchor="middle"
                 className={`text-[10px] transition-colors ${
                   isHovered
-                    ? "fill-blue-700 font-bold dark:fill-blue-400"
-                    : "fill-slate-500 dark:fill-slate-400 font-medium"
+                    ? "fill-[#145d47] font-bold"
+                    : "fill-slate-500 font-medium"
                 }`}
               >
                 {String(d[xKey])}
@@ -207,20 +185,20 @@ export function SvgLineChart<T>({
         })}
       </svg>
 
-      {/* Floating Tooltip when hovered with glassmorphism */}
+      {/* Floating Tooltip when hovered */}
       {hoveredIndex !== null && (
         <div
-          className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full transform rounded-xl border border-white/80 bg-white/85 px-3 py-2 shadow-xl backdrop-blur-md transition-transform duration-75 dark:border-white/10 dark:bg-slate-900/90"
+          className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full transform rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-lg transition-transform duration-75"
           style={{
             left: `${(getX(hoveredIndex) / width) * 100}%`,
             top: `${(getY(Number(data[hoveredIndex][yKey])) / height) * 100 - 4}%`,
           }}
         >
-          <p className="text-[11px] font-semibold text-slate-800 dark:text-slate-200">
-            {String(data[hoveredIndex][xKey])}
+          <p className="text-[11px] font-semibold text-slate-800">
+            Tahun {String(data[hoveredIndex][xKey])}
           </p>
-          <p className="font-mono text-xs font-extrabold text-blue-600 dark:text-blue-400">
-            {valueFormatter(Number(data[hoveredIndex][yKey]))} {unit}
+          <p className="font-mono text-xs font-extrabold text-[#145d47]">
+            {valueFormatter(Number(data[hoveredIndex][yKey]))} {unit} orang
           </p>
         </div>
       )}

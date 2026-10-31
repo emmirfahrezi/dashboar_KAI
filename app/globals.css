@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f0f4fa;
-  --foreground: #0f172a;
+  --background: #f0f4f2;
+  --foreground: #142820;
 }
 
 @theme inline {
@@ -18,29 +18,18 @@ body {
   min-height: 100vh;
 }
 
-/* Glassmorphism utility helpers */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  box-shadow: 0 10px 30px -5px rgba(37, 99, 235, 0.07), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-
-.dark .glass-panel {
-  background: rgba(15, 23, 42, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
-
-.glass-pill {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.65);
+::-webkit-scrollbar-thumb {
+  background: #c3d9cf;
+  border-radius: 9999px;
 }
-
-.dark .glass-pill {
-  background: rgba(30, 41, 59, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+::-webkit-scrollbar-thumb:hover {
+  background: #9abfab;
 }
