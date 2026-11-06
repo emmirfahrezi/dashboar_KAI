@@ -14,7 +14,7 @@ export async function GET() {
   }
 
   try {
-    // Panggil BPS WebAPI secara aman di sisi server tanpa mengekspos API Key ke client
+    // Panggil BPS WebAPIi secara aman di sisi server tanpa mengekspos API Key ke client
     const url = `https://webapi.bps.go.id/v1/api/list/model/statictable/domain/0000/keyword/kereta/key/${encodeURIComponent(
       apiKey
     )}/`;
